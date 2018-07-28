@@ -4,11 +4,11 @@
  * @author Damien Apilando
  * 07/27/2018
  * 
- * email: damienakap@gamil.com
+ * email: damienakap@gmail.com
  * 
- * In collaboration with campuses of the University of Hawaii Community Collage system
- *  - Honolulu Community Collage
- *  - Windward Community Collage
+ * In collaboration with campuses of the University of Hawaii Community Collaee system
+ *  - Honolulu Community College
+ *  - Windward Community College
  * 
  */
 #include "AutoQuad.h"
