@@ -87,7 +87,7 @@ Add additional notes about how to deploy this on a live system
 
 
 ## License
-
+- This project is licenced under the GNU GENERAL PUBLIC LICENSE - see the [LICENSE.md](LICENSE.md) file for details
 
 
 ## Acknowledgments
