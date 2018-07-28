@@ -6,7 +6,7 @@
  * 
  * email: damienakap@gamil.com
  * 
- * In cooperation with campuses of the University of Hawaii Community Collage system
+ * In colaboration with campuses of the University of Hawaii Community Collage system
  *  - Honolulu Community Collage
  *  - Windward Community Collage
  * 
