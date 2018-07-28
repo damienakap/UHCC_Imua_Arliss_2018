@@ -1,6 +1,6 @@
 # UHCC_Imua_Arliss_2018
 
-This repository contains code that was used to pilot the UHCC ARLISS 2018 quadcopter and is designed for autonomous flight, not for remote controll, but can be adapted to take inputs from a controller.
+This repository contains code that was used to pilot the UHCC ARLISS 2018 quadcopter and is designed for autonomous flight, not for remote control, but can be adapted to take inputs from a controller.
 
 ## Getting Started
 
