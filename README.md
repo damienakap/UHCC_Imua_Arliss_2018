@@ -23,17 +23,13 @@ All code assumes you are using the same quadcopter components.
 *all other components are user prefference
 
 Other Components used specifically for the UHCC ARLISS quadcopter.
-- 5x3 in props
-- 
+- 5x3 in carbon fiber props
+- 3s 11.1v 2000mAh lipo battery 
 -
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
-
-```
-Give examples
-```
+Requires the Arduino IDE to compile.
 
 ### Installing
 
