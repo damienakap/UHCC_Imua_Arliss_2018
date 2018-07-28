@@ -8,6 +8,10 @@ All code assumes you are using the same quadcopter components.
 
 - Little Bee 30A ESC
   - signal on pins 10, 11, 12, 13
+  - 10: Front Left    Clockwise
+  - 11: Front Right   Counter-Clockwise
+  - 12: Back Left     Counter-Clockwise
+  - 13: Back Right    ClockWise
 - Feather M0 Adalogger
 - Adafruit 10-DOF IMU Breakout - L3GD20H + LSM303 + BMP180
 - Adafruit Ultimate GPS v3
