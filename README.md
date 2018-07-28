@@ -35,19 +35,19 @@ Give examples
 
 A step by step series of examples that tell you how to get a development env running
 
-Say what the step will be
+Step 1: Install Arduino IDE
 
 ```
 Give the example
 ```
 
-And repeat
+Step 2: Importing/Running code
 
 ```
 until finished
 ```
 
-End with an example of getting some data out of the system or using it for a little demo
+an example
 
 ## Running the tests
 
@@ -71,16 +71,16 @@ Give an example
 
 ## Deployment
 
-Add additional notes about how to deploy this on a live system
+How to develop
 
 ## Built With
-*[Arduino](https://www.arduino.cc/) - compiler
+- [Arduino](https://www.arduino.cc/) - compiler
 
 ## Contributing
 
 
 ## Versioning
- 
+
 
 ## Authors
 
