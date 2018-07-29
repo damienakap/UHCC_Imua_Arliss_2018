@@ -91,7 +91,7 @@ an example
 
 ## License
 
-- This project is licenced under the GNU GENERAL PUBLIC LICENSE - see the [LICENSE.md](LICENSE.md) file for details
+- This project is licenced under the GNU GENERAL PUBLIC LICENSE - see the [LICENSE](LICENSE) file for details
 
 
 ## Acknowledgments
