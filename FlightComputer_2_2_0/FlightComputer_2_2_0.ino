@@ -2,14 +2,25 @@
  * Flight Computer for the UHCC ARLISS 2018 quadcopter
  * 
  * @author Damien Apilando
- * 07/27/2018
- * 
+ * last Updated: 07/28/2018
+ *
  * email: damienakap@gmail.com
  * 
  * In collaboration with campuses of the University of Hawaii Community College system
  *  - Honolulu Community College
  *  - Windward Community College
  * 
+ * required arduino Libraries:
+ *  Adafruit_Sensor.h
+ *  Adafruit_LSM303_U.h
+ *  Adafruit_BMP085_U.h
+ *  Adafruit_L3GD20_U.h
+ *  Adafruit_10DOF.h
+ *  Adafruit_GPS.h
+ *
+ * It assumes you are using the UHCC ARLISS quadcopter parts
+ * - see at: https://github.com/damienakap/UHCC_Imua_Arliss_2018
+ *
  */
 #include "AutoQuad.h"
 
