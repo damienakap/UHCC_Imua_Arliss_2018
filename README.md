@@ -6,6 +6,7 @@ This repository contains code that was used to pilot the UHCC ARLISS 2018 quadco
 
 All code assumes you are using the same quadcopter components.
 
+- 3s 11.1v 2000mAh lipo battery
 - Little Bee 30A ESC
   - signal on pins 10, 11, 12, 13
   - 10: Front Left    Clockwise
@@ -18,14 +19,14 @@ All code assumes you are using the same quadcopter components.
 - a voltage divider on pin A0
   - resistor 1: 14.7kOhms
   - resistor 2: 4/7kOhms
-- a dead trigger ( pull-up ) on pin 9
 
 *all other components are user prefference
 
 Other Components used specifically for the UHCC ARLISS quadcopter.
 - 5x3 in carbon fiber props
-- 3s 11.1v 2000mAh lipo battery 
--
+- Carbon Fiber Mini 250 FPV Quadcopter Frame
+- a dead trigger ( pull-up ) on pin 9
+  - used to detect deployment from the ARLISS rocket
 
 ### Prerequisites
 
