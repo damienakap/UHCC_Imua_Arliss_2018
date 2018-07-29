@@ -39,59 +39,62 @@ A step by step series of examples that tell you how to get a development env run
 Step 1: Install Arduino IDE
 
 ```
-Give the example
+//TODO Give the example
 ```
 
 Step 2: Importing/Running code
 
 ```
-until finished
+//TODO until finished
 ```
 
 an example
 
 ## Running the tests
 
-Explain how to run the automated tests for this system
+//TODO Explain how to run the automated tests for this system
 
 ### Break down into end to end tests
 
-Explain what these tests test and why
+//TODO Explain what these tests test and why
 
 ```
-Give an example
+//TODO Give an example
 ```
 
 ### And coding style tests
 
-Explain what these tests test and why
+//TODO Explain what these tests test and why
 
 ```
-Give an example
+//TODO Give an example
 ```
 
 ## Deployment
 
-How to develop
+//TODO How to develop
 
 ## Built With
 - [Arduino](https://www.arduino.cc/) - compiler
 
 ## Contributing
 
+//TODO 
 
 ## Versioning
 
+//TODO 
 
 ## Authors
 
-
+//TODO 
 
 ## License
+
 - This project is licenced under the GNU GENERAL PUBLIC LICENSE - see the [LICENSE.md](LICENSE.md) file for details
 
 
 ## Acknowledgments
 
-* 
+* //TODO 
 
