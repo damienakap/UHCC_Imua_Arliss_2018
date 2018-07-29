@@ -30,7 +30,7 @@ Other Components used specifically for the UHCC ARLISS quadcopter.
 
 ### Prerequisites
 
-Requires the Arduino IDE to compile.
+Requires the Arduino IDE to compile and the libraries needed to use the Adafruit 10-DOF IMU Breakout, and Ultimate GPS v3.
 
 ### Installing
 
