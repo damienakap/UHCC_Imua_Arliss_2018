@@ -76,21 +76,6 @@ class Gps {
 
 
 
-
-/**************************
-   ########################
-   ##### MadgwickAHRS #####
-   ########################
- **************************
-*/
-class MadgwickAHRS {
-  private:
-  public:
-};
-
-
-
-
 /****************************
    ##########################
    ##### PID Controller #####
@@ -99,12 +84,15 @@ class MadgwickAHRS {
 */
 class PidController {
   private:
-    double pGain, iGain, dGain, errorLast, i;
+    double pGain, iGain, dGain, errorLast;
+    double i, maxIOutput, maxOutput;
 
   public:
     double *measured, *input, *output;
 
     PidController( double *in, double *out, double *meas, double pg, double ig, double dg );
+    void setMaxIOutput( double mio );
+    void setMaxOutput( double mo );
     void setGainValues( double pg, double ig, double dg );
     void calculate();
 };
@@ -145,7 +133,7 @@ class BatteryMonitor {
   private:
     int batteryPin;
     double resistor1, resistor2;
-    double fullVoltage, criticalVoltage;
+    double fullVoltage, criticalBatteryVoltage;
     double batteryVoltage;
     int batteryState;
   public:
@@ -153,6 +141,7 @@ class BatteryMonitor {
     void update();
     int getBatteryState();
     double getBatteryVoltage();
+    double getCriticalBatteryVoltage();
 };
 
 
@@ -172,15 +161,11 @@ class QuadController {
     QuadMotors *quadMotors;
     BatteryMonitor *batteryMonitor;
 
-    double thrust, hoverThrust;
-
     double *rollInput, *pitchInput, *yawInput;
     double *rollOutput, *pitchOutput, *yawOutput;
 
     double totalRoll, totalPitch, totalYaw;
     double targetRoll, targetPitch, targetYaw;
-
-    boolean rollStabilized, pitchStabilized, yawStabilized;
 
     double maxRotationRateRoll, maxRotationRatePitch, maxRotationRateYaw;
     double rollRotationRateScalar, pitchRotationRateScalar, yawRotationRateScalar;
@@ -189,14 +174,15 @@ class QuadController {
     //double batteryThrustCompensation();
     
   public:
+
+    double thrust, hoverThrust, batteryAddedThrust;
+    
     QuadController( Imu *im, QuadMotors *qm, BatteryMonitor *bm, PidController *r, PidController *p, PidController *y );
     void calculate( double dt );
     void updateMotorThrust();
     void setTarget( double r, double p, double y );
     void setMaxRotationRates( double mrrr, double mrrp, double mrry );
     void setRotationRateScalars( double rrrs, double prrs, double yrrs );
-    void setThrust( double t );
-    void setHoverThrust( double t );
 };
 
 #endif

@@ -6,7 +6,7 @@
  * 
  * email: damienakap@gmail.com
  * 
- * In collaboration with campuses of the University of Hawaii Community Collaee system
+ * In collaboration with campuses of the University of Hawaii Community College system
  *  - Honolulu Community College
  *  - Windward Community College
  * 
@@ -44,19 +44,28 @@ BatteryMonitor batteryMonitor(      A0,        14.7d,      4.7d,       12.8d,   
 // creater quadcopter controller
 QuadController quadController( &imu, &quadMotors, &batteryMonitor, &roll, &pitch, &yaw);\
 
+static boolean runLoop = true;
+static long timer = millis();
+static long missionTimer = millis();
+
 void setup(void){
   Serial.begin(9600);
-  //quadMotors.initialize();
-  //quadMotors.off();
+  delay(500);
+  quadMotors.initialize();
+  quadMotors.off();
   
   // set pid gains      [p]     [i]     [d]
-  roll.setGainValues(   0.0d,   0.0d,   0.0d  );
-  pitch.setGainValues(  0.0d,   0.0d,   0.0d  );
-  yaw.setGainValues(    0.0d,   0.0d,   0.0d  );
+  roll.setGainValues(   15.0d,   0.2d,   0.2d  );
+  pitch.setGainValues(  40.0d,   0.3d,   0.2d  );
+  yaw.setGainValues(    50.0d,   0.4d,   0.0d  );
   
-  //set user simulated input
+  //set simulated pilot input
   quadController.setMaxRotationRates( PI, PI, PI );         // max input rotation rate in radians per second
-  quadController.serRotationRateScalars( 2.0, 2.0, 2.0 );   // input rotation rate = angleDelta * scalar
+  quadController.setRotationRateScalars( 0.8, 1.0, 0.0 );   // input rotation rate = angleDelta * scalar
+
+  quadController.thrust = 0.0d;
+  quadController.hoverThrust = 528.0d;
+  quadController.batteryAddedThrust = 100.0d;
   
   imu.initialize();
   gps.initialize();
@@ -64,21 +73,28 @@ void setup(void){
   imu.update();
   gps.update();
   batteryMonitor.update();
+
+  missionTimer = millis();
+  timer = millis();
+  Serial.println("running code");
   
 }
 
-static long timer = millis();
 void loop(void){
   
   // Update at 100Hz
   if(timer>millis()){ timer = millis(); }
   int dt = millis()-timer;
-  if( dt >= 10 ){ 
-    timer = millis();
-    
-    
-    
-    quadController.calculate((double)dt);
-    
+  if( millis()-missionTimer > 10000 ){ runLoop = false; }
+
+  if(runLoop){
+    if( dt >= 10){ 
+      timer = millis();
+      quadController.thrust = quadController.hoverThrust;
+      quadController.calculate((double)dt);
+    }
+  }else{
+    Serial.println("Done running code");
+    quadMotors.off();
   }
 }
