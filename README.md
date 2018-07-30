@@ -23,6 +23,7 @@ All code assumes you are using the same quadcopter components.
 *all other components are user prefference
 
 Other Components used specifically for the UHCC ARLISS quadcopter.
+- T-Motor kv2300
 - 5x3 in carbon fiber props
 - Carbon Fiber Mini 250 FPV Quadcopter Frame
 - a dead trigger ( pull-up ) on pin 9
