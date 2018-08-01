@@ -117,7 +117,7 @@ Gps::Gps( Adafruit_GPS *ag, int pt ) {
   this->adafruitGps = ag;
   this->pingTime    = pt;
 }
-void Gps::initialize() {
+void Gps::initialize( bool hz10 ) {
 
   Serial.println("Initializing GPS...");
   // 9600 NMEA is the default baud rate for Adafruit MTK GPS's- some use 4800
@@ -125,8 +125,10 @@ void Gps::initialize() {
 
   (*this->adafruitGps).sendCommand(PMTK_SET_NMEA_OUTPUT_RMCGGA);
   //(*this->adafruitGps).sendCommand(PMTK_SET_NMEA_OUTPUT_RMCONLY);
-  //(*this->adafruitGps).sendCommand(PMTK_SET_NMEA_UPDATE_1HZ);
-  (*this->adafruitGps).sendCommand(PMTK_SET_NMEA_UPDATE_10HZ);
+  
+  if( hz10 ){ (*this->adafruitGps).sendCommand(PMTK_SET_NMEA_UPDATE_10HZ);  }
+  else{ (*this->adafruitGps).sendCommand(PMTK_SET_NMEA_UPDATE_1HZ); }
+  
   (*this->adafruitGps).sendCommand(PGCMD_ANTENNA);
 
   delay(1000);
@@ -490,7 +492,7 @@ void QuadController::calculate( double dt ) {
   this->updateMotorThrust();
   
   //Serial.println( (*this->batteryMonitor).getBatteryVoltage() );
-  //Serial.println(*this->rollOutput);
+  Serial.println(*this->rollOutput);
 
 }
 /*********************
@@ -507,7 +509,7 @@ void QuadController::updateMotorThrust() {
   if(this->pidOn){
 
     double batteryVoltage = (*this->batteryMonitor).getBatteryVoltage();
-    Serial.println(batteryVoltage);
+    //Serial.println(batteryVoltage);
     double batteryScalar = 0.0d;
     
     if ( (*this->batteryMonitor).getBatteryState() == 0 ) {

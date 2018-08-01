@@ -104,10 +104,10 @@ void setup(void){
   sampleFreq = 100.0f;
   beta = 0.5f;
   
-  // set pid gains      [p]     [i]     [d]
-  roll.setGainValues(   15.0d,   0.2d,   0.2d  );
-  pitch.setGainValues(  40.0d,   0.3d,   0.2d  );
-  yaw.setGainValues(    50.0d,   0.4d,   0.0d  );
+  // set pid gains      [p]      [i]      [d]
+  roll.setGainValues(   15.0d,   0.15d,   0.2d  );
+  pitch.setGainValues(  40.0d,   0.25d,   0.2d  );
+  yaw.setGainValues(    50.0d,   0.3d,    0.0d  );
 
   // set max pid output values
   roll.setMaxOutput(400);   roll.setMaxIOutput(50);
@@ -119,14 +119,14 @@ void setup(void){
   quadController.setRotationRateScalars( 0.8, 1.0, 0.0 );   // input rotationRate = angleDelta * scalar
   
   quadController.thrust = 0.0d;                   // the current thrust of the quadcopter motors. Thrust is from 0 to 1000 ( 0% to 100%)
-  quadController.hoverThrust = 528.0d;            // the amount of thrust to hover
-  quadController.batteryAddedThrust = 100.0d;     // thrust += batteryAddedThrust* (batteryVoltage / 12.7 volts)
+  quadController.hoverThrust = 528.0d;            // the amount of thrust to hover ~53% max thrust
+  quadController.batteryAddedThrust = 100.0d;     // thrust += batteryAddedThrust* (12.8 volts / batteryVoltage)
                                                   // * a fully charged 3s battery has a stored voltage of about 12.65 volts
 
   stateManager.setState( 0 );
   
   imu.initialize();
-  gps.initialize();
+  gps.initialize( true );
   
   imu.update();
   gps.update();
@@ -156,10 +156,12 @@ void loop(void){
   // Update Gps and mission at 10Hz
   if( updateTimer( &updateGpsTimer, &dt, 100 ) ){
 
+    // update gps
     if( gps.isAvailable() ){
       gps.update();
     }
-    
+
+    // update mission progress
     if( !missionDone){
       updateMission();
     }
@@ -169,7 +171,7 @@ void loop(void){
   
   
   // Update at current state 100Hz
-  if( updateTimer( &updateGpsTimer, &dt, 10 ) ){ 
+  if( updateTimer( &updateLoopTimer, &dt, 10 ) ){ 
     stateManager.update( dt );
   }
   
@@ -189,10 +191,10 @@ void loop(void){
 void updateMission(){
   int missionTime = millis() - missionTimer;                                          // STATE    RUN_TIME
       
-  if( missionTime > 9000 ){ stateManager.setState(0); missionDone = true; return; }   // idle     done
-  if( missionTime > 6000 ){ stateManager.setState(3); return; }                       // land     3s
-  if( missionTime > 1000 ){ stateManager.setState(1); return; }                       // hover    5s
-  if( missionTime > 0    ){ stateManager.setState(0); return; }                       // idle     1s
+  if( missionTime >= 9000 ){ stateManager.setState(0); missionDone = true; return; }   // idle     done
+  if( missionTime >= 6000 ){ stateManager.setState(3); return; }                       // land     3s
+  if( missionTime >= 1000 ){ stateManager.setState(1); return; }                       // hover    5s
+  if( missionTime >= 0    ){ stateManager.setState(0); return; }                       // idle     1s
   
 }
 

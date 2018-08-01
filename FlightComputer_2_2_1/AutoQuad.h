@@ -68,7 +68,7 @@ class Gps {
 
   public:
     Gps( Adafruit_GPS *ag , int pt);
-    void initialize();
+    void initialize( bool hz10 );
     bool isAvailable();
     void update();
 
