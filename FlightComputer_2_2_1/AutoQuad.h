@@ -166,6 +166,7 @@ class QuadController {
     double *rollOutput, *pitchOutput, *yawOutput;
 
     double totalRoll, totalPitch, totalYaw;
+    double totalRollOffset, totalPitchOffset, totalYawOffset;
     double targetRoll, targetPitch, targetYaw;
 
     double maxRotationRateRoll, maxRotationRatePitch, maxRotationRateYaw;
@@ -185,6 +186,7 @@ class QuadController {
     void setTarget( double r, double p, double y );
     void setMaxRotationRates( double mrrr, double mrrp, double mrry );
     void setRotationRateScalars( double rrrs, double prrs, double yrrs );
+    void setTotalRotationOffset( double tro, double tpo, double tyo );
 };
 
 #endif

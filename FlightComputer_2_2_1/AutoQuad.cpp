@@ -205,10 +205,12 @@ void PidController::calculate() {
   double d  = ( error - this->errorLast ) * this->dGain;
 
   if( this->i > this->maxIOutput ){ this->i = this->maxIOutput; }
+  if( this->i < -this->maxIOutput ){ this->i = -this->maxIOutput; }
   
   *this->output = p + i + d;
 
   if( (*this->output) > this->maxOutput ){ *this->output = this->maxOutput; }
+  if( (*this->output) < -this->maxOutput ){ *this->output = -this->maxOutput; }
   
   this->errorLast = error;
 }
@@ -409,9 +411,9 @@ void QuadController::calculateOrientation() {
 
   // generate orientation quaternion using Madgwick's Attitude and Heading Reference System algorithm
   MadgwickAHRSupdate(
-    (*this->imu).gyro.x, (*this->imu).gyro.y, (*this->imu).gyro.z,
+    (*this->imu).gyro.x,  (*this->imu).gyro.y,  (*this->imu).gyro.z,
     (*this->imu).accel.x, (*this->imu).accel.y, (*this->imu).accel.z,
-    (*this->imu).mag.x, (*this->imu).mag.y, (*this->imu).mag.z
+    (*this->imu).mag.x,   (*this->imu).mag.y,   (*this->imu).mag.z
   );
   Quaternion qRot( q0, q1, q2, q3 );
 
@@ -435,13 +437,13 @@ void QuadController::calculateOrientation() {
  */
 void QuadController::calculatePid(){
   
-  double deltaRoll  = (this->targetRoll)  - (this->totalRoll);
-  double deltaPitch = (this->targetPitch) - (this->totalPitch);
-  double deltaYaw   = (this->targetYaw)   - (this->totalYaw);
+  double deltaRoll  = (this->targetRoll)  - (this->totalRoll)   - (this->totalRollOffset);
+  double deltaPitch = (this->targetPitch) - (this->totalPitch)  - (this->totalPitchOffset);
+  double deltaYaw   = (this->targetYaw)   - (this->totalYaw)    - (this->totalYawOffset);
 
   double desiredRoll  = deltaRoll;
-  double desiredPitch = deltaPitch * cos(this->totalRoll)   +   deltaYaw * sin(this->totalRoll);
-  double desiredYaw   = deltaYaw * cos(this->totalRoll)     -   deltaPitch * sin(this->totalRoll);
+  double desiredPitch = deltaPitch  * cos(this->totalRoll)   +   deltaYaw   * sin(this->totalRoll);
+  double desiredYaw   = deltaYaw    * cos(this->totalRoll)   -   deltaPitch * sin(this->totalRoll);
 
   double desiredRollRate  =   desiredRoll     *   (this->rollRotationRateScalar);
   if ( desiredRollRate   >   this->maxRotationRateRoll   ) {
@@ -559,4 +561,10 @@ void QuadController::setRotationRateScalars( double rrrs, double prrs, double yr
   this->pitchRotationRateScalar = prrs;
   this->yawRotationRateScalar   = yrrs;
 }
+void QuadController::setTotalRotationOffset( double tro, double tpo, double tyo ){
+  this->totalRollOffset   = tro;
+  this->totalPitchOffset  = tpo;
+  this->totalYawOffset    = tyo;
+}
+
 

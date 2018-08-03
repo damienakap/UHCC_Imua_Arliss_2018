@@ -110,7 +110,7 @@ void StateManager::navState( double dt ){
 void StateManager::landState( double dt ){
 
   if( !(this->stateInit) ){
-    (*this->quadController).thrust = (*this->quadController).hoverThrust * 0.8;
+    (*this->quadController).thrust = (*this->quadController).hoverThrust * 0.75;
     (*this->quadController).pidOn = true;
     this->stateInit = false;
   }
