@@ -27,7 +27,8 @@ bool updateTimer( long *timer, double *dt, int delayTime ){
   
   *dt = (double)(millis()-(*timer));
   if( *dt >= delayTime ){
-    *dt /= 1000.0d;
+    *timer = millis();
+    *dt = delayTime/1000.0d;
     return true;
   }
   

@@ -78,9 +78,9 @@ void Imu::calibrate() {
 
     delay((int)(1000 / sampleRate));
   }
-  this->accelCalib * 0.5;
-  this->gyroCalib * 0.5;
-  this->magCalib * 0.5;
+  this->accelCalib  *= 0.5;
+  this->gyroCalib   *= 0.5;
+  this->magCalib    *= 0.5;
 
 }
 /**************************
@@ -442,9 +442,9 @@ void QuadController::calculatePid(){
   double deltaYaw   = (this->targetYaw)   - (this->totalYaw)    - (this->totalYawOffset);
 
   double desiredRoll  = deltaRoll;
-  double desiredPitch = deltaPitch  * cos(this->totalRoll)   +   deltaYaw   * sin(this->totalRoll);
-  double desiredYaw   = deltaYaw    * cos(this->totalRoll)   -   deltaPitch * sin(this->totalRoll);
-
+  double desiredPitch = deltaPitch  * cos(this->totalRoll);//   +   deltaYaw   * sin(this->totalRoll);
+  double desiredYaw   = deltaYaw    * cos(this->totalRoll);//   -   deltaPitch * sin(this->totalRoll);
+  
   double desiredRollRate  =   desiredRoll     *   (this->rollRotationRateScalar);
   if ( desiredRollRate   >   this->maxRotationRateRoll   ) {
     desiredRollRate   =   this->maxRotationRateRoll;
@@ -476,6 +476,8 @@ void QuadController::calculatePid(){
   (*this->rollPid).calculate();
   (*this->pitchPid).calculate();
   (*this->yawPid).calculate();
+
+  //Serial.println( desiredPitchRate );
   
 }
 /*************************
@@ -494,7 +496,7 @@ void QuadController::calculate( double dt ) {
   this->updateMotorThrust();
   
   //Serial.println( (*this->batteryMonitor).getBatteryVoltage() );
-  Serial.println(*this->rollOutput);
+  //Serial.print(*this->rollOutput);Serial.print(" , ");Serial.print(*this->pitchOutput);Serial.print(" , ");Serial.println(*this->yawOutput);
 
 }
 /*********************
@@ -518,10 +520,10 @@ void QuadController::updateMotorThrust() {
       batteryScalar = 12.8d / (*this->batteryMonitor).getBatteryVoltage();
     }
     
-    fl += -(*this->rollOutput) + (*this->pitchOutput) - (*this->yawOutput) + batteryScalar*(this->batteryAddedThrust);
-    fr +=  (*this->rollOutput) + (*this->pitchOutput) + (*this->yawOutput) + batteryScalar*(this->batteryAddedThrust);
-    bl += -(*this->rollOutput) - (*this->pitchOutput) + (*this->yawOutput) + batteryScalar*(this->batteryAddedThrust);
-    br +=  (*this->rollOutput) - (*this->pitchOutput) - (*this->yawOutput) + batteryScalar*(this->batteryAddedThrust);
+    fl += -(*this->rollOutput) + (*this->pitchOutput) + (*this->yawOutput) + batteryScalar*(this->batteryAddedThrust);
+    fr +=  (*this->rollOutput) + (*this->pitchOutput) - (*this->yawOutput) + batteryScalar*(this->batteryAddedThrust);
+    bl += -(*this->rollOutput) - (*this->pitchOutput) - (*this->yawOutput) + batteryScalar*(this->batteryAddedThrust);
+    br +=  (*this->rollOutput) - (*this->pitchOutput) + (*this->yawOutput) + batteryScalar*(this->batteryAddedThrust);
     
   }
 
@@ -565,6 +567,11 @@ void QuadController::setTotalRotationOffset( double tro, double tpo, double tyo 
   this->totalRollOffset   = tro;
   this->totalPitchOffset  = tpo;
   this->totalYawOffset    = tyo;
+}
+void QuadController::setPidIValues( double rI, double pI, double yI ){
+  (*this->rollPid).i   = rI;
+  (*this->pitchPid).i  = pI;
+  (*this->yawPid).i    = yI;
 }
 
 

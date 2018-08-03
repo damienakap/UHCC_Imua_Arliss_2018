@@ -86,10 +86,10 @@ class Gps {
 class PidController {
   private:
     double pGain, iGain, dGain, errorLast;
-    double i, maxIOutput, maxOutput;
+    double maxIOutput, maxOutput;
 
   public:
-    double *measured, *input, *output;
+    double *measured, *input, *output, i;
 
     PidController( double *in, double *out, double *meas, double pg, double ig, double dg );
     void setMaxIOutput( double mio );
@@ -187,6 +187,7 @@ class QuadController {
     void setMaxRotationRates( double mrrr, double mrrp, double mrry );
     void setRotationRateScalars( double rrrs, double prrs, double yrrs );
     void setTotalRotationOffset( double tro, double tpo, double tyo );
+    void setPidIValues( double rI, double pI, double yI );
 };
 
 #endif

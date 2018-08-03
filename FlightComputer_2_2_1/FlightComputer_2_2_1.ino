@@ -1,4 +1,4 @@
-/*
+ /*
  * Flight Computer for the UHCC ARLISS 2018 quadcopter
  * 
  * @author Damien Apilando
@@ -104,10 +104,13 @@ void setup(void){
   beta = 0.5f;
   
   // set pid gains      [p]      [i]      [d]
-  roll.setGainValues(   12.0d,   0.005d,   0.01d  );
-  pitch.setGainValues(  18.0d,   0.005d,   0.01d  );
-  yaw.setGainValues(    50.0d,   0.2d,    0.0d  ); 
+  roll.setGainValues(   12.0d,   0.03d,   0.01d  );
+  pitch.setGainValues(  18.0d,   0.07d,   0.01d  );
+  yaw.setGainValues(    18.0d,   0.0d,    0.01d  ); 
 
+  // initialize pid I values
+  quadController.setPidIValues( -6.0d, -20.0d, -5.0d );
+  
   // set max pid output values
   roll.setMaxOutput(400);   roll.setMaxIOutput(50);
   pitch.setMaxOutput(400);  pitch.setMaxIOutput(50);
@@ -115,12 +118,12 @@ void setup(void){
   
   //set simulated pilot input
   quadController.setMaxRotationRates( PI, PI, PI );         // max input rotation rate in radians per second
-  quadController.setRotationRateScalars( 3.0d, 3.0d, 0.0d );   // input rotationRate = angleDelta * scalar
-  quadController.setTotalRotationOffset(-13.0d*DEG_TO_RAD, -19.0d*DEG_TO_RAD, 0.0d );    // set input rotation offsets
-  //quadController.setTotalRotationOffset(0.0d, 0.0d, 0.0d );    // set input rotation offsets
+  quadController.setRotationRateScalars( 3.0d, 3.0d, 1.0d );   // input rotationRate = angleDelta * scalar
+  //quadController.setTotalRotationOffset(-13.0d*DEG_TO_RAD, -19.0d*DEG_TO_RAD, 0.0d );    // set input rotation offsets
+  quadController.setTotalRotationOffset( 0.0d, -5.0d*DEG_TO_RAD, 0.0d );    // set input rotation offsets
   
   quadController.thrust = 0.0d;                   // the current thrust of the quadcopter motors. Thrust is from 0 to 1000 ( 0% to 100%)
-  quadController.hoverThrust = 380.0d;            // (52.8) the amount of thrust to hover ~53% max thrust
+  quadController.hoverThrust = 360.0d;            // (52.8) the amount of thrust to hover ~53% max thrust
   quadController.batteryAddedThrust = 300.0d;     // thrust += batteryAddedThrust* (12.8 volts / batteryVoltage)
                                                   // * a fully charged 3s battery has a stored voltage of about 12.65 volts
 
