@@ -106,7 +106,7 @@ void setup(void){
   // set pid gains      [p]      [i]      [d]
   roll.setGainValues(   12.0d,   0.03d,   0.01d  );
   pitch.setGainValues(  18.0d,   0.07d,   0.01d  );
-  yaw.setGainValues(    18.0d,   0.0d,    0.01d  ); 
+  yaw.setGainValues(    18.0d,   0.03d,    0.00d  ); 
 
   // initialize pid I values
   quadController.setPidIValues( -6.0d, -20.0d, -5.0d );
@@ -123,7 +123,7 @@ void setup(void){
   quadController.setTotalRotationOffset( 0.0d, -5.0d*DEG_TO_RAD, 0.0d );    // set input rotation offsets
   
   quadController.thrust = 0.0d;                   // the current thrust of the quadcopter motors. Thrust is from 0 to 1000 ( 0% to 100%)
-  quadController.hoverThrust = 360.0d;            // (52.8) the amount of thrust to hover ~53% max thrust
+  quadController.hoverThrust = 380.0d;            // (52.8) the amount of thrust to hover ~53% max thrust
   quadController.batteryAddedThrust = 300.0d;     // thrust += batteryAddedThrust* (12.8 volts / batteryVoltage)
                                                   // * a fully charged 3s battery has a stored voltage of about 12.65 volts
 
