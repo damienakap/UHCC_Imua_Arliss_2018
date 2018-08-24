@@ -48,6 +48,9 @@ void StateManager::update( double dt ){
     case 3:
       this->landState( dt );
       break;
+    case 4:
+      this->launchState( dt );
+      break;
     default:
       this->idleState( dt );
   }
@@ -115,6 +118,32 @@ void StateManager::landState( double dt ){
     this->stateInit = false;
   }
 
+  (*this->quadController).calculate( dt );
+  
+}
+/**************
+ * Launch State 4
+ **************
+ */
+void StateManager::launchState( double dt ){
+
+  if( !(this->stateInit) ){
+    (*this->quadController).pidOn = true;
+    this->stateInit = false;
+  }
+
+  if( (*this->quadController).thrust < (*this->quadController).hoverThrust ){
+    (*this->quadController).thrust += 10;
+    if( (*this->quadController).thrust > (*this->quadController).hoverThrust ){
+      (*this->quadController).thrust = (*this->quadController).hoverThrust;
+    }
+  }else if( (*this->quadController).thrust > (*this->quadController).hoverThrust ){
+    (*this->quadController).thrust -= 10;
+    if( (*this->quadController).thrust < (*this->quadController).hoverThrust ){
+      (*this->quadController).thrust = (*this->quadController).hoverThrust;
+    }
+  }
+  
   (*this->quadController).calculate( dt );
   
 }

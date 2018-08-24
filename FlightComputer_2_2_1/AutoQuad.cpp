@@ -442,9 +442,9 @@ void QuadController::calculatePid(){
   double deltaYaw   = (this->targetYaw)   - (this->totalYaw)    - (this->totalYawOffset);
 
   double desiredRoll  = deltaRoll;
-  double desiredPitch = deltaPitch  * cos(this->totalRoll);//   +   deltaYaw   * sin(this->totalRoll);
-  double desiredYaw   = deltaYaw    * cos(this->totalRoll);//   -   deltaPitch * sin(this->totalRoll);
-  
+  double desiredPitch = deltaPitch;//  * cos(this->totalRoll);//   +   deltaYaw   * sin(this->totalRoll);
+  double desiredYaw   = deltaYaw;//    * cos(this->totalRoll);//   -   deltaPitch * sin(this->totalRoll);
+  //Serial.println(deltaYaw);
   double desiredRollRate  =   desiredRoll     *   (this->rollRotationRateScalar);
   if ( desiredRollRate   >   this->maxRotationRateRoll   ) {
     desiredRollRate   =   this->maxRotationRateRoll;
@@ -516,9 +516,9 @@ void QuadController::updateMotorThrust() {
     //Serial.println(batteryVoltage);
     double batteryScalar = 0.0d;
     
-    if ( (*this->batteryMonitor).getBatteryState() == 0 ) {
+    //if ( (*this->batteryMonitor).getBatteryState() == 0 ) {
       batteryScalar = 12.8d / (*this->batteryMonitor).getBatteryVoltage();
-    }
+    //}
     
     fl += -(*this->rollOutput) + (*this->pitchOutput) + (*this->yawOutput) + batteryScalar*(this->batteryAddedThrust);
     fr +=  (*this->rollOutput) + (*this->pitchOutput) - (*this->yawOutput) + batteryScalar*(this->batteryAddedThrust);
